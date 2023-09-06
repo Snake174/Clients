@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clients</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="ru" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="x-rim-auto-match" content="none" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="copyright" content="" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addClient" id="add-client-btn">Add Client</button>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4" th:each="client : ${clients}">
+                <div class="thumbnail" style="margin-top: 5px;">
+                    <div class="caption">
+                        <h3 th:text="${client.name}">Name</h3>
+                        <div class="btn-group" role="group" aria-label="">
+                            <button type="button" class="btn btn-default client-info" th:attr="data-id=${client.id}" data-toggle="modal" data-target="#modalContacts">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default client-email" th:attr="data-id=${client.id}" data-toggle="modal" data-target="#modalContacts">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default client-phone" th:attr="data-id=${client.id}" data-toggle="modal" data-target="#modalContacts">
+                                <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-group" style="padding-bottom: 3px;">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Email" th:id="'client-email-' + ${client.id}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default client-add-email" type="button" th:attr="data-id=${client.id}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Phone" th:id="'client-phone-' + ${client.id}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default client-add-phone" type="button" th:attr="data-id=${client.id}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalContacts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Contacts</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="contacts-table" class="table table-hover table-bordered">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addClient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">Add Client</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="client-name">Client name</label>
+                        <input type="text" class="form-control" id="client-name" />
+                    </div>
+                    <div>
+                        <h5>Emails</h5>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Email" id="email" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="add-email-to-list">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <ul class="list-group list-group-light list-group-small" id="email-list"></ul>
+                    </div>
+                    <div>
+                        <h5>Phones</h5>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Phone" id="phone" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="add-phone-to-list">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <ul class="list-group list-group-light list-group-small" id="phone-list"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-changes">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            let fillTable = function (data, title) {
+                var rows = $.map(data, function (value, index) {
+                    return '<tr><td>' + value + '</td></tr>';
+                });
+                $('#myModalLabel').text('Contacts');
+                $('#contacts-table thead').html('<tr><th>' + title + '</th></tr>');
+                $('#contacts-table tbody').html(rows.join(''));
+            }
+
+            let fillTableInfo = function (data) {
+                var rows = $.map(data.contacts, function (value, index) {
+                    return '<tr><td>' + value + '</td><td>' + index + '</td></tr>';
+                });
+                $('#myModalLabel').text(data.name);
+                $('#contacts-table thead').html('<tr><th>Type</th><th>Contact</th></tr>');
+                $('#contacts-table tbody').html(rows.join(''));
+            }
+
+            // Client info
+            $('.client-info').on('click', function () {
+                let clientId = $(this).attr('data-id');
+                $.ajax({
+                    url: '/api/v1/clients/' + clientId + '/info',
+                    success: function (response) {
+                        fillTableInfo(response);
+        		    }
+                });
+            });
+
+            // Client email contacts
+            $('.client-email').on('click', function () {
+                let clientId = $(this).attr('data-id');
+                $.ajax({
+                    url: '/api/v1/clients/' + clientId + '/email',
+                    success: function (response) {
+                        fillTable(response, 'Email');
+        		    }
+                });
+            });
+
+            // Client phone contacts
+            $('.client-phone').on('click', function () {
+                let clientId = $(this).attr('data-id');
+                $.ajax({
+                    url: '/api/v1/clients/' + clientId + '/phone',
+                    success: function (response) {
+                        fillTable(response, 'Phone');
+        		    }
+                });
+            });
+
+            // Add email
+            $('.client-add-email').on('click', function () {
+                let clientId = $(this).attr('data-id');
+                let email = $('#client-email-' + clientId).val();
+
+                let jsonData = {};
+                jsonData['client_id'] = clientId;
+                jsonData['data'] = email;
+
+                $.ajax({
+                    url: '/api/v1/clients/' + clientId + '/email',
+                    method: 'POST',
+                    data: JSON.stringify(jsonData),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#client-email-' + clientId).val('');
+                        $('#client-email-' + clientId).focus();
+        		    }
+                });
+            });
+
+            // Add phone
+            $('.client-add-phone').on('click', function () {
+                let clientId = $(this).attr('data-id');
+                let phone = $('#client-phone-' + clientId).val();
+
+                let jsonData = {};
+                jsonData['client_id'] = clientId;
+                jsonData['data'] = phone;
+
+                $.ajax({
+                    url: '/api/v1/clients/' + clientId + '/phone',
+                    method: 'POST',
+                    data: JSON.stringify(jsonData),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#client-phone-' + clientId).val('');
+                        $('#client-phone-' + clientId).focus();
+        		    }
+                });
+            });
+
+            $('#add-client-btn').on('click', function () {
+                $('#email-list').empty();
+                $('#phone-list').empty();
+                $('#client-name').val('');
+                $('#client-name').focus();
+            });
+
+            $('#save-changes').on('click', function () {
+                let clientName = $('#client-name').val();
+                let emails = [];
+                let phones = [];
+
+                $('#email-list li').each(function (i) { emails.push($(this).text()); });
+                $('#phone-list li').each(function (i) { phones.push($(this).text()); });
+
+                let jsonData = {};
+                jsonData['name'] = clientName;
+                jsonData['emails'] = emails;
+                jsonData['phones'] = phones;
+
+                $.ajax({
+                    url: '/api/v1/clients',
+                    method: 'POST',
+                    data: JSON.stringify(jsonData),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        location.reload();
+        		    }
+                });
+            });
+
+            $('#add-email-to-list').on('click', function () {
+                $('#email-list').append('<li class="list-group-item">' + $('#email').val() + '</li>');
+                $('#email').val('');
+                $('#email').focus();
+            });
+
+            $('#add-phone-to-list').on('click', function () {
+                $('#phone-list').append('<li class="list-group-item">' + $('#phone').val() + '</li>');
+                $('#phone').val('');
+                $('#phone').focus();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+databaseChangeLog:
+    - changeSet:
+          id: create-clients-table
+          author: Snake174
+          changes:
+            - createTable:
+                tableName: clients
+                columns:
+                    - column:
+                        name: id
+                        type: BIGSERIAL
+                        autoIncrement: true
+                        constraints:
+                            nullable: false
+                            primaryKey: true
+                            primaryKeyName: clients_pkey
+                    - column:
+                        name: name
+                        type: VARCHAR(255)
+                        constraints:
+                            nullable: false

@@ -1,0 +1,7 @@
+databaseChangeLog:
+    - include:
+        file: db/changelog/changelogset/create-clients-table.yaml
+    - include:
+        file: db/changelog/changelogset/create-emails-table.yaml
+    - include:
+        file: db/changelog/changelogset/create-phones-table.yaml
